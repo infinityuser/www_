@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField
 from wtforms.validators import DataRequired, Length, Email, EqualTo
 from wtforms.widgets import TextArea
-from application.users.models import Post
+from application.user.models import Post
 
 
 class RegistrationForm(FlaskForm):
@@ -34,8 +34,8 @@ class PostForm(FlaskForm):
 	submit = SubmitField('Post')
 
 	def make(self, post):
-		self.title = post.title
-		self.topic = post.topic
-		self.body = post.body
-		self.private = post.private
+		self.title.data = post.title
+		self.topic.data = post.topic
+		self.body.data = post.body
+		self.private.data = post.private
 		

@@ -22,10 +22,11 @@
 	<h3> Author: {{ post.author_name }} {{ post.author_surname }} </h3>
 	<h3> Title: {{ post.title }} </h3>
 	<h3> Topic: {{ post.topic }} </h3>
+	<h4> {{ post.body }} </h4>
 	<h3> Publication date: {{ post.publication_date }} </h3>
 	<h3> Latest editing on: {{ post.latest_editing_date }} </h3>
 	{% if post.author_id == current_user.id %}
-		<a href="{{url_for('post.edit_post_page', post_=post)}}">Редактировать публикацию</a>
+			<a href="{{url_for('post.edit_post_page', id_=post.id)}}">Редактировать публикацию</a>
 	{% endif %}
 	<br>
 	{% endfor %}

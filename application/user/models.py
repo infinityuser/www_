@@ -44,3 +44,6 @@ class Post(db.Model):
 	body = db.Column(db.Text, nullable=False)
 	publication_date = db.Column(db.Date, nullable=False)
 	latest_editing_date = db.Column(db.Date, nullable=False)
+
+	def __repr__(self):
+		return f"Post('{self.title}', '{self.topic}', '{self.latest_editing_date}')"

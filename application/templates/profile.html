@@ -31,9 +31,8 @@
 	<h3> Latest editing on: {{ post.latest_editing_date }} </h3>
 		{% if post.private %} 
 			<h3> *private publication <h3>
-			<a href="{{url_for('post.edit_post_page', post_=post)}}">Редактировать публикацию</a>
 		{% endif %}
-	<a href="{{url_for('post.edit_page')}}" class="unreg"></a>
+			<a href="{{url_for('post.edit_post_page', id_=post.id)}}">Редактировать публикацию</a>
 	<br>
 	{% endfor %}
 </body>
