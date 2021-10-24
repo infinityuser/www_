@@ -11,6 +11,10 @@ post = Blueprint('post', __name__)
 @post.route("/post", methods=["GET", "POST"])
 @login_required
 def create_post_page():
+	if not ('write' in current_user.permissions.split('+') and Post.query.get(int(id_)) and Post.query.get(int(id_)).author_id == current_user.id):
+		flash("You have no access!", 'danger')
+		return redirect(url_for('home.home_page'))
+
 	flash('Stick form requirements', 'success')
 	form = PostForm()
 
@@ -26,7 +30,7 @@ def create_post_page():
 @post.route("/edit_<id_>", methods=["GET", "POST"])
 @login_required
 def edit_post_page(id_):
-	if not (Post.query.get(int(id_)) and Post.query.get(int(id_)).author_id == current_user.id):
+	if not ('write' in current_user.permissions.split('+') and Post.query.get(int(id_)) and Post.query.get(int(id_)).author_id == current_user.id):
 		flash("Either you have no access or it doesn't exist!", 'danger')
 		return redirect(url_for('home.home_page'))
 	

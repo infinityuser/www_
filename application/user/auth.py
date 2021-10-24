@@ -17,7 +17,7 @@ def signup_page():
 			flash('Account with this email already exists!', 'danger')
 		else:
 			hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-			user = User(name=form.name.data, surname=form.surname.data, email=form.email.data, password=hashed_password, profile_picture="default.png", permissions="read")
+			user = User(name=form.name.data, surname=form.surname.data, email=form.email.data, password=hashed_password, profile_picture="default.png", permissions="write+read")
 			db.session.add(user)
 			db.session.commit()
 			flash('Your account has been created! You are now able to log in.', 'success')
