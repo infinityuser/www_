@@ -11,7 +11,9 @@ post = Blueprint('post', __name__)
 @post.route("/post", methods=["GET", "POST"])
 @login_required
 def create_post_page():
+	flash('Stick form requirements', 'success')
 	form = PostForm()
+
 	if form.validate_on_submit():
 		post = Post(title=form.title.data, topic=form.topic.data, body=form.body.data, author_id=current_user.id, author_name=current_user.name, author_surname=current_user.surname, private=form.private.data, publication_date=date.today(), latest_editing_date=date.today())
 		db.session.add(post)
@@ -27,20 +29,19 @@ def edit_post_page(id_):
 	if not (Post.query.get(int(id_)) and Post.query.get(int(id_)).author_id == current_user.id):
 		flash("Either you have no access or it doesn't exist!", 'danger')
 		return redirect(url_for('home.home_page'))
-
+	
+	flash('Stick form requirements', 'success')
 	form = PostForm()
 	if not form.title.data:
 		form.make(Post.query.get(int(id_)))
 
 	if form.validate_on_submit():
-		print(form.title.data, form.topic.data)
 		post = Post.query.get(int(id_))
 		post.title = form.title.data
 		post.topic = form.topic.data
 		post.body = form.body.data
 		post.private = form.private.data
 		post.latest_editing_date = date.today()
-		print(post)
 		db.session.commit()
 		flash('Your post has been updated!', 'success')
 		return redirect(url_for('home.home_page'))
