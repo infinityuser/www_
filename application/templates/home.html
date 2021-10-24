@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Home</title>
+</head>
+
+{% with messages = get_flashed_messages() %}
+	{% if messages %}
+		<ul class="flash">
+		<h2> Flash notifications: </h2>
+			{% for message in messages %}
+				<li>{{ message }}</li>
+			{% endfor %}
+		</ul>
+	{% endif %}
+{% endwith %}
+
+<body>
+	<h1> Publications: </h1>
+	{% for post in posts %}
+	<h3> Author: {{ post.author_name }} {{ post.author_surname }} </h3>
+	<h3> Title: {{ post.title }} </h3>
+	<h3> Topic: {{ post.topic }} </h3>
+	<h3> Publication date: {{ post.publication_date }} </h3>
+	<h3> Latest editing on: {{ post.latest_editing_date }} </h3>
+	{% if post.author_id == current_user.id %}
+		<a href="{{url_for('post.edit_post_page', post_=post)}}">Редактировать публикацию</a>
+	{% endif %}
+	<br>
+	{% endfor %}
+</body>
+</html>

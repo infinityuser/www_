@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Publication</title>
+</head>
+
+{% with messages = get_flashed_messages() %}
+	{% if messages %}
+		<ul class="flash">
+		<h2> Flash notifications: </h2>
+			{% for message in messages %}
+				<li>{{ message }}</li>
+			{% endfor %}
+		</ul>
+	{% endif %}
+{% endwith %}
+
+<body>
+	<form class="form" action="" method="post">
+		{{ form.csrf_token }}
+		<h1>Публикация</h1><br>
+		{{ form.title(placeholder="Название публикации") }}<br>
+		{{ form.topic(placeholder="Тема публикации") }}<br>
+		{{ form.body(cols="50", rows="50", placeholder="Содержание") }}<br>
+		{{ form.private() }}<br>
+		{{ form.submit(value="Обновить") }}<br>
+	</form>
+</body>
+</html>

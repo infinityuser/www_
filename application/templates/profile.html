@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Profile</title>
+</head>
+
+{% with messages = get_flashed_messages() %}
+	{% if messages %}
+		<ul class="flash">
+		<h2> Flash notifications: </h2>
+			{% for message in messages %}
+				<li>{{ message }}</li>
+			{% endfor %}
+		</ul>
+	{% endif %}
+{% endwith %}
+
+<body>
+	<h2> Profile data: </h2>
+	<h3> Name: {{ user.name }} </h3>
+	<h3> Surname: {{ user.surname }} </h3>
+	<h3> Email: {{ user.email }} </h3>
+	<img src="{{url_for('static', filename='profile_picture/'+user.profile_picture)}}" alt="Profile picture"> 
+
+	<h2> Your posts: </h2>
+	{% for post in posts %}
+	<h3> Title: {{ post.title }} </h3>
+	<h3> Topic: {{ post.topic }} </h3>
+	<h3> Publication date: {{ post.publication_date }} </h3>
+	<h3> Latest editing on: {{ post.latest_editing_date }} </h3>
+		{% if post.private %} 
+			<h3> *private publication <h3>
+			<a href="{{url_for('post.edit_post_page', post_=post)}}">Редактировать публикацию</a>
+		{% endif %}
+	<a href="{{url_for('post.edit_page')}}" class="unreg"></a>
+	<br>
+	{% endfor %}
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Log in</title>
+</head>
+
+{% with messages = get_flashed_messages() %}
+	{% if messages %}
+		<ul class="flash">
+		<h2> Flash notifications: </h2>
+			{% for message in messages %}
+				<li>{{ message }}</li>
+			{% endfor %}
+		</ul>
+	{% endif %}
+{% endwith %}
+
+<body>
+
+	<form class="form" action="" method="post">
+		{{ form.csrf_token }}
+		<h1>Вход</h1><br>
+		{{ form.email(placeholder="Почта") }}<br>
+		{{ form.password(placeholder="Пароль") }}<br>
+		{{ form.remember() }} <br>
+		{{ form.submit(value="Войти") }}<br>
+		<a href="{{url_for('auth.signup_page')}}" class="unreg">Не имеете аккаунта?</a>
+	</form>
+</body>
+</html>
