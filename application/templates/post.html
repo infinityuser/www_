@@ -8,13 +8,27 @@
 {% with messages = get_flashed_messages() %}
 	{% if messages %}
 		<ul class="flash">
-		<h2> Flash notifications: </h2>
+		<h2> Уведомления: </h2>
 			{% for message in messages %}
 				<li>{{ message }}</li>
 			{% endfor %}
 		</ul>
 	{% endif %}
 {% endwith %}
+
+<header>
+	<a href="{{url_for('home.home_page')}}">Главная</a>
+	{% if current_user.is_authenticated %}
+		{% if 'write' in current_user.permissions.split('+') %}
+			<a href="{{url_for('post.create_post_page')}}">Опубликовать</a>
+		{% endif %}
+		<a href="{{url_for('profile.profile_page')}}">Профиль</a>
+		<a href="{{url_for('auth.logout_page')}}">Выйти</a>
+	{% else %}
+		<a href="{{url_for('auth.login_page')}}">Авторизация</a>
+		<a href="{{url_for('auth.signup_page')}}">Регистрация</a>
+	{% endif %}
+</header>
 
 <body>
 	<form class="form" action="" method="post">

@@ -12,7 +12,7 @@ bcrypt = Bcrypt(app)
 
 login_manager = LoginManager(app)
 login_manager.login_view = 'auth.login_page'
-login_manager.login_message = 'User need to be logged in'
+login_manager.login_message = 'Вы должны быть авторизированы'
 login_manager.login_message_category = 'danger'
 
 from application.content.home import home

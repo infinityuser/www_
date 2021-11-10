@@ -8,7 +8,7 @@
 {% with messages = get_flashed_messages() %}
 	{% if messages %}
 		<ul class="flash">
-		<h2> Flash notifications: </h2>
+		<h2> Уведомления: </h2>
 			{% for message in messages %}
 				<li>{{ message }}</li>
 			{% endfor %}
@@ -16,11 +16,25 @@
 	{% endif %}
 {% endwith %}
 
+<header>
+	<a href="{{url_for('home.home_page')}}">Главная</a>
+	{% if current_user.is_authenticated %}
+		{% if 'write' in current_user.permissions.split('+') %}
+			<a href="{{url_for('post.create_post_page')}}">Опубликовать</a>
+		{% endif %}
+		<a href="{{url_for('profile.profile_page')}}">Профиль</a>
+		<a href="{{url_for('auth.logout_page')}}">Выйти</a>
+	{% else %}
+		<a href="{{url_for('auth.login_page')}}">Авторизация</a>
+		<a href="{{url_for('auth.signup_page')}}">Регистрация</a>
+	{% endif %}
+</header>
+
 <body>
-	<h2> Profile data: </h2>
-	<h3> Name: {{ user.name }} </h3>
-	<h3> Surname: {{ user.surname }} </h3>
-	<h3> Email: {{ user.email }} </h3>
+	<h2> Данные пользователя: </h2>
+	<h3> Имя: {{ user.name }} </h3>
+	<h3> Фамилия: {{ user.surname }} </h3>
+	<h3> Почта: {{ user.email }} </h3>
 	<img src="{{url_for('static', filename='profile_picture/'+user.profile_picture)}}" alt="Profile picture"> 
 
 	<h2> Your posts: </h2>

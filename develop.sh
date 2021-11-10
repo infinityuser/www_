@@ -7,5 +7,5 @@ source /home/$user/$project/env/bin/activate
 cd /home/$user/$project/$entry/
 export FLASK_DEBUG=1
 export FLASK_APP="wsgi.py"
-flask run -p 4000
+flask run -p 4000 #--cert=../validation/cert.pem --key=../validation/key.pem
 sudo systemctl stop nginx.service

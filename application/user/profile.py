@@ -11,9 +11,10 @@ profile = Blueprint('profile', __name__)
 @login_required
 def profile_page():
 	return render_template('profile.html', user=current_user, posts=Post.query.filter_by(author_id=current_user.id).order_by(asc(Post.publication_date)).all())
-	
+
+'''
 @profile.route("/change_profile")
 @login_required
 def change_profile():
 	return render_template('profile.html', user=current_user)
-	
+'''	

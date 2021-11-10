@@ -11,18 +11,18 @@ post = Blueprint('post', __name__)
 @post.route("/post", methods=["GET", "POST"])
 @login_required
 def create_post_page():
-	if not ('write' in current_user.permissions.split('+') and Post.query.get(int(id_)) and Post.query.get(int(id_)).author_id == current_user.id):
+	if not 'write' in current_user.permissions.split('+'):
 		flash("You have no access!", 'danger')
 		return redirect(url_for('home.home_page'))
 
-	flash('Stick form requirements', 'success')
+	flash('Придерживайтесь стандарта заполнения', 'success')
 	form = PostForm()
 
 	if form.validate_on_submit():
 		post = Post(title=form.title.data, topic=form.topic.data, body=form.body.data, author_id=current_user.id, author_name=current_user.name, author_surname=current_user.surname, private=form.private.data, publication_date=date.today(), latest_editing_date=date.today())
 		db.session.add(post)
 		db.session.commit()
-		flash('Your post has been created!', 'success')
+		flash('Ваша публикация создана!', 'success')
 		return redirect(url_for('home.home_page'))
 	return render_template('post.html', form=form)
 
@@ -31,10 +31,10 @@ def create_post_page():
 @login_required
 def edit_post_page(id_):
 	if not ('write' in current_user.permissions.split('+') and Post.query.get(int(id_)) and Post.query.get(int(id_)).author_id == current_user.id):
-		flash("Either you have no access or it doesn't exist!", 'danger')
+		flash("Недостаточно прав или публикации не существует!", 'danger')
 		return redirect(url_for('home.home_page'))
 	
-	flash('Stick form requirements', 'success')
+	flash('Придерживайтесь стандарта заполнения', 'success')
 	form = PostForm()
 	if not form.title.data:
 		form.make(Post.query.get(int(id_)))
@@ -47,6 +47,6 @@ def edit_post_page(id_):
 		post.private = form.private.data
 		post.latest_editing_date = date.today()
 		db.session.commit()
-		flash('Your post has been updated!', 'success')
+		flash('Ваша публикация обновлена!', 'success')
 		return redirect(url_for('home.home_page'))
 	return render_template('post.html', form=form)

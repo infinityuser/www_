@@ -1,34 +1,64 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-	<meta charset="utf-8">
+	<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
 	<title>Home</title>
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='styles/main.css')}}">
 </head>
 
-{% with messages = get_flashed_messages() %}
-	{% if messages %}
-		<ul class="flash">
-		<h2> Flash notifications: </h2>
-			{% for message in messages %}
-				<li>{{ message }}</li>
-			{% endfor %}
-		</ul>
-	{% endif %}
-{% endwith %}
-
 <body>
-	<h1> Publications: </h1>
-	{% for post in posts %}
-	<h3> Author: {{ post.author_name }} {{ post.author_surname }} </h3>
-	<h3> Title: {{ post.title }} </h3>
-	<h3> Topic: {{ post.topic }} </h3>
-	<h4> {{ post.body }} </h4>
-	<h3> Publication date: {{ post.publication_date }} </h3>
-	<h3> Latest editing on: {{ post.latest_editing_date }} </h3>
-	{% if post.author_id == current_user.id %}
-			<a href="{{url_for('post.edit_post_page', id_=post.id)}}">Редактировать публикацию</a>
-	{% endif %}
-	<br>
-	{% endfor %}
+	<div class="flash">
+		{% with messages = get_flashed_messages() %}
+			{% if messages %}
+				<ul class="flash">
+				<h2 class="title"> Уведомления: </h2>
+					{% for message in messages %}
+						<li class="flash">{{ message }}</li>
+					{% endfor %}
+				</ul>
+			{% endif %}
+		{% endwith %}
+	</div>
+
+	<div class="header">
+		<a href="{{url_for('home.home_page')}}" class="logo">ProstoSchool</a>
+		<div class="header-right">
+			<a class="active" href="{{url_for('home.home_page')}}">Главная</a>
+			{% if current_user.is_authenticated %}
+				{% if 'write' in current_user.permissions.split('+') %}
+					<a href="{{url_for('post.create_post_page')}}">Опубликовать</a>
+				{% endif %}
+				<a href="{{url_for('profile.profile_page')}}">Профиль</a>
+				<a href="{{url_for('auth.logout_page')}}">Выйти</a>
+			{% else %}
+				<a href="{{url_for('auth.login_page')}}">Авторизация</a>
+				<a href="{{url_for('auth.signup_page')}}">Регистрация</a>
+			{% endif %}
+		</div>
+	</div>
+
+	<div class="publications">
+		<h1 class="title"> Публикации: </h1>
+		{% for current_post in range(post_num_begin, post_num_end): %}
+		<div class="post">
+			{% set post = posts[current_post] %}
+			<b class="name"> {{ post.title }} </b> <br>
+			<b class="topic"> {{ post.topic }} </b> <br>
+			<br>
+			<b class="user"> {{ post.author_name }} {{ post.author_surname }} </b> <br>
+			<b class="date"> {{ post.publication_date }} — {{ post.latest_editing_date }} </b>
+			{% if post.author_id == current_user.id %}
+				<br>
+				<a href="{{url_for('post.edit_post_page', id_=post.id)}}">Редактировать публикацию</a>
+			{% endif %}
+			<br>
+		</div>
+		{% endfor %}
+
+		{% if post_num_end != post_num_all %}
+			<br>
+			<a href="{{url_for('home.home_page', post_num_begin_=post_num_end)}}">Следующие публикации</a>
+		{% endif %}
+	</div>
 </body>
 </html>
