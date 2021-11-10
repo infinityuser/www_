@@ -12,7 +12,7 @@ post = Blueprint('post', __name__)
 @login_required
 def create_post_page():
 	if not 'write' in current_user.permissions.split('+'):
-		flash("You have no access!", 'danger')
+		flash("Нет доступа!", 'danger')
 		return redirect(url_for('home.home_page'))
 
 	flash('Придерживайтесь стандарта заполнения', 'success')
@@ -31,7 +31,7 @@ def create_post_page():
 @login_required
 def edit_post_page(id_):
 	if not ('write' in current_user.permissions.split('+') and Post.query.get(int(id_)) and Post.query.get(int(id_)).author_id == current_user.id):
-		flash("Недостаточно прав или публикации не существует!", 'danger')
+		flash("Нет доступа!", 'danger')
 		return redirect(url_for('home.home_page'))
 	
 	flash('Придерживайтесь стандарта заполнения', 'success')
@@ -50,3 +50,16 @@ def edit_post_page(id_):
 		flash('Ваша публикация обновлена!', 'success')
 		return redirect(url_for('home.home_page'))
 	return render_template('post.html', form=form)
+
+
+@post.route("/view_<id_>")
+def view_post_page(id_):
+	if current_user.is_authenticated and not ('read' in current_user.permissions.split('+') and Post.query.get(int(id_)) and Post.query.get(int(id_)).author_id == current_user.id):
+		flash("Нет доступа!", 'danger')
+		return redirect(url_for('home.home_page'))
+	
+	form = PostForm()
+	if not form.title.data:
+		form.make(Post.query.get(int(id_)))
+
+	return render_template('view.html', post=Post.query.get(int(id_)))

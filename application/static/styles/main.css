@@ -62,13 +62,28 @@ body {
 	padding-left: 8px;
 }
 
+.publications .post_view {
+	padding-left: 8px;
+}
+
 .publications .post .name {
 	color: black;
 	font-size: 23px;
 	font-weight: bold;
 }
 
+.publications .post_view .name {
+	color: black;
+	font-size: 29px;
+	font-weight: normal;
+}
+
 .publications .post .user {
+	font-size: 15px;
+	font-weight: normal;
+}
+
+.publications .post_view .user {
 	font-size: 15px;
 	font-weight: normal;
 }
@@ -78,9 +93,37 @@ body {
 	font-weight: normal;
 }
 
+.publications .post_view .topic {
+	color: black;
+	font-size: 18px;
+	font-weight: normal;
+}
+
 .publications .post .date {
 	font-size: 18px;
 	font-weight: normal;
+}
+
+.publications .post_view .date {
+	font-size: 18px;
+	font-weight: normal;
+}
+
+.publications .post_view .body {
+	font-size: 24px;
+	font-weight: normal;
+}
+
+.publications .post a {
+	font-size: 18px;
+	font-weight: normal;
+	color: black;
+}
+
+.publications .post_view a {
+	font-size: 18px;
+	font-weight: normal;
+	color: black;
 }
 
 @media screen and (max-width: 650px) {
@@ -94,3 +137,35 @@ body {
 		float: none;
 	}
 }
+
+input[type=text], select {
+	width: 100%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+input[type=submit] {
+	width: 100%;
+	background-color: dodgerblue;
+	color: white;
+	padding: 14px 20px;
+	margin: 8px 0;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+input[type=submit]:hover {
+	background-color: #1e9fff;
+}
+
+.post_form {
+	border-radius: 5px;
+	background-color: #f2f2f2;
+	padding: 20px;
+}
+

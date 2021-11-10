@@ -44,6 +44,8 @@
 			{% set post = posts[current_post] %}
 			<b class="name"> {{ post.title }} </b> <br>
 			<b class="topic"> {{ post.topic }} </b> <br>
+			<a href="{{url_for('post.view_post_page', id_=post.id)}}">Просмотр</a>
+			<br>
 			<br>
 			<b class="user"> {{ post.author_name }} {{ post.author_surname }} </b> <br>
 			<b class="date"> {{ post.publication_date }} — {{ post.latest_editing_date }} </b>
@@ -51,8 +53,8 @@
 				<br>
 				<a href="{{url_for('post.edit_post_page', id_=post.id)}}">Редактировать публикацию</a>
 			{% endif %}
-			<br>
 		</div>
+		<br>
 		{% endfor %}
 
 		{% if post_num_end != post_num_all %}
