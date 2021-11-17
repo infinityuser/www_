@@ -54,7 +54,7 @@ def edit_post_page(id_):
 
 @post.route("/view_<id_>")
 def view_post_page(id_):
-	if current_user.is_authenticated and not ('read' in current_user.permissions.split('+') and Post.query.get(int(id_)) and Post.query.get(int(id_)).author_id == current_user.id):
+	if current_user.is_authenticated and not ('read' in current_user.permissions.split('+')):
 		flash("Нет доступа!", 'danger')
 		return redirect(url_for('home.home_page'))
 	
@@ -63,3 +63,4 @@ def view_post_page(id_):
 		form.make(Post.query.get(int(id_)))
 
 	return render_template('view.html', post=Post.query.get(int(id_)))
+

@@ -26,7 +26,7 @@
 			<a href="{{url_for('home.home_page')}}">Главная</a>
 			{% if current_user.is_authenticated %}
 				{% if 'write' in current_user.permissions.split('+') %}
-					<a class="activa" href="{{url_for('post.create_post_page')}}">Опубликовать</a>
+					<a class="active" href="{{url_for('post.create_post_page')}}">Опубликовать</a>
 				{% endif %}
 				<a href="{{url_for('profile.profile_page')}}">Профиль</a>
 				<a href="{{url_for('auth.logout_page')}}">Выйти</a>
@@ -42,7 +42,7 @@
 			{{ form.csrf_token }}
 			{{ form.title(placeholder="Название публикации") }}<br>
 			{{ form.topic(placeholder="Тема публикации") }}<br>
-			{{ form.body(cols="50", rows="50", placeholder="Содержание") }}<br>
+			{{ form.body(cols="38", rows="50", placeholder="Содержание") }}<br>
 			<b class="private"> Закрытая публикация </b> {{ form.private() }}<br>
 			{{ form.submit(value="Опубликовать") }}<br>
 		</form>

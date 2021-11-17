@@ -23,7 +23,7 @@
 	<div class="header">
 		<a href="{{url_for('home.home_page')}}" class="logo">ProstoSchool</a>
 		<div class="header-right">
-			<a href="{{url_for('home.home_page')}}">Главная</a>
+			<a class="active" href="{{url_for('home.home_page')}}">Главная</a>
 			{% if current_user.is_authenticated %}
 				{% if 'write' in current_user.permissions.split('+') %}
 					<a href="{{url_for('post.create_post_page')}}">Опубликовать</a>

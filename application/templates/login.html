@@ -1,44 +1,52 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-	<meta charset="utf-8">
+	<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
 	<title>Log in</title>
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='styles/main.css')}}">
 </head>
 
-{% with messages = get_flashed_messages() %}
-	{% if messages %}
-		<ul class="flash">
-		<h2> Уведомления: </h2>
-			{% for message in messages %}
-				<li>{{ message }}</li>
-			{% endfor %}
-		</ul>
-	{% endif %}
-{% endwith %}
-
-<header>
-	<a href="{{url_for('home.home_page')}}">Главная</a>
-	{% if current_user.is_authenticated %}
-		{% if 'write' in current_user.permissions.split('+') %}
-			<a href="{{url_for('post.create_post_page')}}">Опубликовать</a>
-		{% endif %}
-		<a href="{{url_for('profile.profile_page')}}">Профиль</a>
-		<a href="{{url_for('auth.logout_page')}}">Выйти</a>
-	{% else %}
-		<a href="{{url_for('auth.login_page')}}">Авторизация</a>
-		<a href="{{url_for('auth.signup_page')}}">Регистрация</a>
-	{% endif %}
-</header>
-
 <body>
-	<form class="form" action="" method="post">
-		{{ form.csrf_token }}
-		<h1>Вход</h1><br>
-		{{ form.email(placeholder="Почта") }}<br>
-		{{ form.password(placeholder="Пароль") }}<br>
-		{{ form.remember() }} <br>
-		{{ form.submit(value="Войти") }}<br>
-		<a href="{{url_for('auth.signup_page')}}" class="unreg">Не имеете аккаунта?</a>
-	</form>
+	<div class="flash">
+		{% with messages = get_flashed_messages() %}
+			{% if messages %}
+				<ul class="flash">
+				<h2 class="title"> Уведомления: </h2>
+					{% for message in messages %}
+						<li class="flash">{{ message }}</li>
+					{% endfor %}
+				</ul>
+			{% endif %}
+		{% endwith %}
+	</div>
+
+	<div class="header">
+		<a href="{{url_for('home.home_page')}}" class="logo">ProstoSchool</a>
+		<div class="header-right">
+			<a href="{{url_for('home.home_page')}}">Главная</a>
+			{% if current_user.is_authenticated %}
+				{% if 'write' in current_user.permissions.split('+') %}
+					<a href="{{url_for('post.create_post_page')}}">Опубликовать</a>
+				{% endif %}
+				<a href="{{url_for('profile.profile_page')}}">Профиль</a>
+				<a href="{{url_for('auth.logout_page')}}">Выйти</a>
+			{% else %}
+				<a class="active" href="{{url_for('auth.login_page')}}">Авторизация</a>
+				<a href="{{url_for('auth.signup_page')}}">Регистрация</a>
+			{% endif %}
+		</div>
+	</div>
+
+	<div class="signup_window">
+		<form class="form" action="" method="post">
+			{{ form.csrf_token }}
+			<h1 class="title">Вход</h1><br>
+			{{ form.email(placeholder="Почта") }}<br>
+			{{ form.password(placeholder="Пароль") }}<br>
+			<b> Запомнить меня </b> {{ form.remember() }} <br>
+			{{ form.submit(value="Войти") }}<br>
+			<a href="{{url_for('auth.signup_page')}}" class="unreg">Не имеете аккаунта?</a>
+		</form>
+	</div>
 </body>
 </html>
